@@ -1,0 +1,26 @@
+services:
+  couchbase:
+    image: couchbase/server:enterprise-7.0.1
+    container_name: couchbase
+    ports:
+      - "8091:8091"  # Couchbase Web Console
+      - "8092:8092"  # Couchbase Server
+      - "8093:8093"  # Couchbase REST API
+      - "11210:11210"  # Couchbase Data
+    environment:
+      - COUCHBASE_ROOT_PASSWORD=your_password  # Replace with your desired password
+      - COUCHBASE_BUCKET=flight-status-bucket  # Replace with your bucket name
+      - COUCHBASE_BUCKET_PASSWORD=your_bucket_password  # Replace with your bucket password
+
+  flight-status-service:
+    image: flight-status-service:latest  # Replace with the actual image name and version
+    container_name: flight-status-service
+    ports:
+      - "8080:8080"  # Expose the Spring Boot application port
+    environment:
+      - COUCHBASE_HOST=couchbase  # Use the service name of Couchbase container
+      - COUCHBASE_PORT=8091  # Couchbase Web Console port
+      - COUCHBASE_BUCKET=flight-status-bucket  # Same as defined for Couchbase
+      - COUCHBASE_BUCKET_PASSWORD=your_bucket_password  # Same as defined for Couchbase
+    depends_on:
+      - couchbase  # Ensure that Couchbase is started before the application
