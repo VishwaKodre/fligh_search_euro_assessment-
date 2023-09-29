@@ -43,5 +43,47 @@ This command will start both the Flight Status Service and Couchbase containers,
 
 **Shut Down the Containers**: When you're finished, you can stop the containers by pressing Ctrl+C in the terminal where Docker Compose is running.
 
+## Setting Up Couchbase Bucket and Adding Flight Data
+
+Before running the Flight Status Service, you'll need to set up a Couchbase bucket named "flight-search-service" and add flight data as documents. Follow these steps:
+
+1. **Access Couchbase Console**: Open a web browser and navigate to the Couchbase Web Console at `http://localhost:8091` (or the URL where your Couchbase instance is running).
+
+2. **Log In**: Log in to the Couchbase Console using the credentials you configured in the `docker-compose.yml` file.
+
+3. **Create a Bucket**:
+   - Click on the "Buckets" tab in the Couchbase Console.
+   - Click the "Create Bucket" button.
+   - Enter "flight-search-service" as the bucket name.
+   - Set any desired configurations such as the bucket's memory quota and replica count.
+   - Click the "Create Bucket" button to create the "flight-search-service" bucket.
+
+4. **Add Flight Data as Documents**:
+   - Click on the "Buckets" tab and select the "flight-search-service" bucket.
+   - In the "Documents" tab, click the "Create Document" button.
+   - In the document editor, paste the following payload as a JSON document. You can use this as a template and modify it for different flight entries:
+
+   ```json
+   {
+     "flightNumber": "BA123",
+     "departureAirportCode": "JFK",
+     "departureAirportName": "John F. Kennedy International Airport",
+     "departureTime": "2023-09-27T08:00:00Z",
+     "arrivalAirportCode": "LHR",
+     "arrivalAirportName": "London Heathrow Airport",
+     "arrivalTime": "2023-09-27T12:00:00Z",
+     "status": "On Time",
+     "flightRoute": [
+       {
+         "airportCode": "ORD",
+         "airportName": "Chicago O'Hare International Airport"
+       },
+       {
+         "airportCode": "DFW",
+         "airportName": "Dallas/Fort Worth International Airport"
+       }
+     ]
+   }
+
 ### Configuration
 The application's configuration can be modified in the application.properties file, and Couchbase configuration can be adjusted in the docker-compose.yml file.
