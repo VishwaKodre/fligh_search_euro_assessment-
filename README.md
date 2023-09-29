@@ -85,5 +85,5 @@ Before running the Flight Status Service, you'll need to set up a Couchbase buck
      ]
    }
 
-### Configuration
+### Configuration 
 The application's configuration can be modified in the application.properties file, and Couchbase configuration can be adjusted in the docker-compose.yml file.
